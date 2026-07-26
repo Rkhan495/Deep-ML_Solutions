@@ -1,0 +1,44 @@
+import numpy as np
+
+def product_rule_derivative(f_coeffs: list, g_coeffs: list) -> list:
+    """
+    Compute the derivative of the product of two polynomials.
+    
+    Args:
+        f_coeffs: Coefficients of polynomial f, where f_coeffs[i] is the coefficient of x^i
+        g_coeffs: Coefficients of polynomial g, where g_coeffs[i] is the coefficient of x^i
+    
+    Returns:
+        Coefficients of (f*g)' as a list of floats rounded to 4 decimal places
+    """
+    if not f_coeffs or not g_coeffs: return [0.0]
+
+    def differentiate(coeffs):
+        prime = []
+        for i in range(1, len(coeffs)):
+            prime.append(i * coeffs[i])
+        return prime
+
+    def multiply(poly1, poly2):
+        res = [0.0] * (len(poly1) + len(poly2) - 1)
+        for i in range(len(poly1)):
+            for j in range(len(poly2)):
+                res[i+j] += poly1[i] * poly2[j]
+        return res
+
+    f_prime = differentiate(f_coeffs)
+    g_prime = differentiate(g_coeffs)
+
+    term1 = multiply(f_prime, g_coeffs)
+    term2 = multiply(f_coeffs, g_prime)
+
+    result = [0.0] * len(term1)
+    for i in range(len(term1)): 
+        result[i] += round(float(term1[i]), 4)
+    for i in range(len(term2)): 
+        result[i] += round(float(term2[i]), 4)
+
+    while len(result) > 1 and result[-1] == 0.0:
+        result.pop()
+
+    return (result if result else [0.0])
