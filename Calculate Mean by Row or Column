@@ -1,20 +1,17 @@
 def calculate_matrix_mean(matrix: list[list[float]], mode: str) -> list[float]:
 	means = []
+	cols = len(matrix[0])
+	rows = len(matrix)
 	if mode == 'column':
-		m = len(matrix[0])
-		n = len(matrix)
+		for i in range(cols):
+			total = 0
+			for j in range(rows):
+				total += matrix[j][i]
+			means.append(total/rows)
 	else:
-		m = len(matrix)
-		n = len(matrix[0])
-	for i in range(m):
-		count = 0
-		sum = 0
-		for j in range(n):
-			if mode == 'column':
-				sum += matrix[j][i]
-				count += 1
-			else:
-				sum += matrix[i][j]
-				count += 1
-		means.append(sum/count)
+		for i in range(rows):
+			total = 0
+			for j in range(cols):
+				total += matrix[i][j]
+			means.append(total/cols)
 	return means
