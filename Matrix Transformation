@@ -1,0 +1,38 @@
+import numpy as np
+
+def transform_matrix(A: list[list[int|float]], T: list[list[int|float]], S: list[list[int|float]]) -> list[list[int|float]]:
+	A = np.array(A)
+	T = np.array(T)
+	S = np.array(S)
+	transformed_matrix = []
+
+	def find_det(matrix):
+	    if len(matrix) > 2:
+	       s_mat = np.ones((1, len(matrix)))
+	       e_mat = np.ones((1, len(matrix)))
+	       n = len(matrix)
+	       for i in range(n):
+	           for k in range(n):
+	               j = (i + k) % n
+	               s_mat[0][k] *= matrix[i][j]
+	               e_mat[0][k] *= matrix[n-1-i][j]
+	               return sum(sum(s_mat)) - sum(sum(e_mat))
+	    return ((matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]))
+	            
+
+	def check_invertibility(matrix):
+		if find_det(matrix) == 0:
+		    print(find_det(matrix))
+		    return False
+		return True
+
+	def inverse_matrix(matrix):
+		return np.linalg.inv(matrix)
+
+	if check_invertibility(T) and check_invertibility(S):
+		T_inverse = inverse_matrix(T)
+		transformed_matrix = T_inverse @ A @ S
+	else:
+		return -1
+	
+	return transformed_matrix
