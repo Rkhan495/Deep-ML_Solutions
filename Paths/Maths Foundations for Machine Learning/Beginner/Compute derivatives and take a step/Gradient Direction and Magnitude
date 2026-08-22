@@ -1,0 +1,37 @@
+import numpy as np
+import math
+
+def gradient_direction_magnitude(gradient: list) -> dict:
+	"""
+	Calculate the magnitude and direction of a gradient vector.
+	
+	Args:
+		gradient: A list representing the gradient vector
+	
+	Returns:
+		Dictionary containing:
+		- magnitude: The L2 norm of the gradient
+		- direction: Unit vector in direction of steepest ascent
+		- descent_direction: Unit vector in direction of steepest descent
+	"""
+	sum = 0
+	for i in gradient:
+		sum += i**2
+	
+	magnitude = round(float(math.sqrt(sum)),4)
+
+	if magnitude == 0.0:
+		zero_vector = [0.0 for _ in gradient]
+		return {'magnitude': magnitude,
+        'direction': zero_vector,
+        'descent_direction': zero_vector}
+
+	direction = []
+	descent_direction = []
+	for i in range(len(gradient)):
+		direction.append(gradient[i]/magnitude)
+		descent_direction.append(-direction[i])
+
+	return {'magnitude': magnitude,
+        'direction': direction,
+        'descent_direction': descent_direction}
