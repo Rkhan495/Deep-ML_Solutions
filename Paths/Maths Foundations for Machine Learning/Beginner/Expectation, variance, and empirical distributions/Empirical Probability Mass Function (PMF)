@@ -1,0 +1,18 @@
+def empirical_pmf(samples):
+    """
+    Given an iterable of integer samples, return a list of (value, probability)
+    pairs sorted by value ascending.
+    """
+    n = len(samples)
+    if n == 0:
+        return samples
+    counts = {}
+    for i in samples:
+        if counts.get(i, "Not found") == "Not found":
+            counts[i] = 1
+        else:
+            counts[i] = 1 + counts.get(i)
+
+    result = [(i, counts.get(i)/n) for i in counts]
+
+    return result
