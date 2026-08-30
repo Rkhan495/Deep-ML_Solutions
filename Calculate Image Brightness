@@ -1,0 +1,17 @@
+def calculate_brightness(img):
+	m = len(img)
+	if m == 0:
+		return -1
+	n = len(img[0])
+	is_uniform = all(len(row) == n for row in img)
+	if is_uniform == False:
+		return -1
+
+	brightness = 0
+	for i in range(m):
+		for j in range(n):
+			if img[i][j] < 0 or img[i][j] > 255 :
+				return -1
+			brightness += img[i][j]
+
+	return brightness / (m * n)
