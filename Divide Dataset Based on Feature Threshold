@@ -1,0 +1,11 @@
+import numpy as np
+
+def divide_on_feature(X, feature_i, threshold):
+	arr1 = []
+	arr2 = []
+	for i in range(len(X)):
+		if X[i][feature_i] >= threshold:
+			arr1.append(X[i])
+		else:
+			arr2.append(X[i])
+	return [arr1, arr2]
